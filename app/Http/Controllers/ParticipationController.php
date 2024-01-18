@@ -31,7 +31,6 @@ class ParticipationController extends Controller
     public function previousWeek()
     {
         $previousWeeksParticipations = Participation::with('participant', 'team')
-                                                    ->where('week', '<', Carbon::now()->startOfWeek())
                                                     ->orderBy('week', 'desc')
                                                     ->get()
                                                     ->groupBy('week');
