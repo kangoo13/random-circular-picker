@@ -28,11 +28,11 @@ class ParticipantsTableSeeder extends Seeder
         // Define participants for each team
         $participants = [
             'Tech' => ['Aurélien', 'Lionel', 'JV', 'Geoffroy', 'Benjamin'],
-            'CSM' => ['Blandine', 'Nolwenn', 'Saad', 'Elodie', 'Julie'],
+            'CSM' => ['Blandine', 'Nolwenn', 'Saad', 'Elodie', 'Julie', 'Valentine'],
             'New Biz' => ['Samuel', 'Camille'],
             'AM' => ['Marylou', 'Olivier'],
             'Product' => ['Guillaume', 'Cindy'],
-            'Admin/Rh/Compta' => ['Assaf', 'Chloé', 'Camille'],
+            'Admin/Rh/Compta' => ['Assaf', 'Chloé'],
         ];
 
         // Insert participants into the database
