@@ -2,17 +2,9 @@
 
 @extends('layouts.app')
 @php
-    // Assuming you are using Carbon for date manipulation
-    use Carbon\Carbon;
-
-    // Get the current date and time
-    $now = Carbon::now();
-
-    // Get the Monday of the current week
-    $mondayThisWeek = $now->startOfWeek();
-
-    // Format the date as "XXXX-MONTH-DAY"
-    $formattedDate = $mondayThisWeek->format('Y-F-d'); // Example output: 2023-March-06
+    // Use Carbon for date manipulation
+    $mondayThisWeek = \Carbon\Carbon::now()->startOfWeek();
+    $formattedDate = $mondayThisWeek->format('Y-m-d'); // Example output: 2024-01-15
 @endphp
 @section('content')
     <div class="container mt-5">
