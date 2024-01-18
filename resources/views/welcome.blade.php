@@ -4,15 +4,25 @@
 @php
     // Use Carbon for date manipulation
     $mondayThisWeek = \Carbon\Carbon::now()->startOfWeek();
-    $formattedDate = $mondayThisWeek->format('Y-m-d'); // Example output: 2024-01-15
+    $mondayNextWeek = \Carbon\Carbon::now()->addWeek()->startOfWeek();
+    $formattedDateThisWeek = $mondayThisWeek->format('Y-m-d'); // Example output: 2024-01-15
+    $formattedDateNextWeek = $mondayNextWeek->format('Y-m-d'); // Example output: 2024-01-22
+@endphp
+@php
+    // Group participants by team name and sort them by team name
+    $groupedByTeam = $participantsWithCount->groupBy(function($item, $key) {
+        return $item->team->name ?? 'No Team';
+    })->sortBy(function($item, $key) {
+        return $key; // Sort by the team name (which is the key in this case)
+    });
 @endphp
 @section('content')
     <div class="container mt-5">
         <div class="row justify-content-center">
-            <div class="col-md-10">
+            <div class="col-md-6">
                 <div class="card border-primary mb-3">
                     <div class="card-header bg-primary text-white">
-                        <h2 class="text-center">Semaine du {{ $formattedDate }}</h2>
+                        <h2 class="text-center">Semaine actuelle ({{ $formattedDateThisWeek }})</h2>
                     </div>
                     <ul class="list-group list-group-flush">
                         @forelse($currentWeekParticipations as $participation)
@@ -25,6 +35,22 @@
                     </ul>
                 </div>
             </div>
+            <div class="col-md-6">
+                <div class="card border-success mb-3">
+                    <div class="card-header bg-success text-white">
+                        <h2 class="text-center">Semaine suivante ({{ $formattedDateNextWeek }})</h2>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        @forelse($nextWeekParticipations as $participation)
+                            <li class="list-group-item">
+                                <span class="font-weight-bold">{{ $participation->participant->name }}</span> - Team: <span class="text-success">{{ $participation->team->name }}</span>
+                            </li>
+                        @empty
+                            <li class="list-group-item">Le tirage se fait le vendredi à minuit.</li>
+                        @endforelse
+                    </ul>
+                </div>
+            </div>
         </div>
         <div class="row justify-content-center">
             <div class="col-md-10">
@@ -33,9 +59,11 @@
                         <h2 class="text-center">Participants et participations</h2>
                     </div>
                     @php
-                        // Group participants by team name
+                        // Group participants by team name and sort them by team name
                         $groupedByTeam = $participantsWithCount->groupBy(function($item, $key) {
                             return $item->team->name ?? 'No Team';
+                        })->sortBy(function($item, $key) {
+                            return $key; // Sort by the team name (which is the key in this case)
                         });
                     @endphp
                     @forelse($groupedByTeam as $teamName => $participants)

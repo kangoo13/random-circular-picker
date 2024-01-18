@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('participation:create-weekly')->cron('0 0 * * 1');
+        $schedule->command('participation:create-weekly')->cron('0 0 * * 5');
     }
 
     /**

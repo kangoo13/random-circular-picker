@@ -57,14 +57,16 @@ class CreateWeeklyParticipations extends Command
             // Randomly pick a participant from the group
             $participant = $eligibleParticipants->shuffle()->first();
 
+            $nextMonday = Carbon::now('Europe/Paris')->addWeek()->startOfWeek();
+
             // If a participant is found, create the participation
             if ($participant) {
                 Participation::create([
                     'participant_id' => $participant->id,
                     'team_id'        => $teamId,
-                    'created_at'     => now()->startOfWeek(),
-                    'updated_at'     => now()->startOfWeek(),
-                    'week'           => Carbon::now('Europe/Paris')->toDateString(),
+                    'created_at'     => $nextMonday,
+                    'updated_at'     => $nextMonday,
+                    'week'           => $nextMonday->toDateString(),
                 ]);
 
                 // Remove the assigned participant from the original collection
