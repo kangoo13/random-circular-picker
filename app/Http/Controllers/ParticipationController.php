@@ -18,20 +18,22 @@ class ParticipationController extends Controller
         $startOfNextWeek = Carbon::now()->addWeek()->startOfWeek()->toDateString();
         $endOfNextWeek   = Carbon::now()->addWeek()->endOfWeek()->toDateString();
 
-        // Get participations of the current week with the associated team
         $currentWeekParticipations = Participation::with('team')
                                                   ->whereBetween('week', [$startOfWeek, $endOfWeek])
                                                   ->get()
-                                                  ->sortBy('team.name');;
+                                                  ->sortBy('team.name');
 
-        // Get participants with their number of participations
-        $participantsWithCount = Participant::withCount('participations')
-                                            ->get();
+        $participantsWithCount = Participant::with(['team', 'participations'])
+                                            ->withCount('participations')
+                                            ->get()
+                                            ->sortBy(function ($participant) {
+                                                return $participant->team->name . $participant->name;
+                                            });
 
         $nextWeekParticipations = Participation::with('team')
                                                ->whereBetween('week', [$startOfNextWeek, $endOfNextWeek])
                                                ->get()
-                                               ->sortBy('team.name');;
+                                               ->sortBy('team.name');
 
         // Return the view with the data
         return view('welcome', compact('currentWeekParticipations', 'nextWeekParticipations', 'participantsWithCount'));
