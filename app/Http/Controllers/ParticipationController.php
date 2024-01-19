@@ -39,9 +39,14 @@ class ParticipationController extends Controller
         return view('welcome', compact('currentWeekParticipations', 'nextWeekParticipations', 'participantsWithCount'));
     }
 
-    public function previousWeek()
+    public function previousWeeks()
     {
+        // Get the start of the current week
+        $startOfCurrentWeek = Carbon::now()->startOfWeek()->toDateString();
+
+        // Query the participations for all weeks before the current week
         $previousWeeksParticipations = Participation::with('participant', 'team')
+                                                    ->where('week', '<', $startOfCurrentWeek)
                                                     ->orderBy('week', 'desc')
                                                     ->get()
                                                     ->groupBy('week')
@@ -52,6 +57,6 @@ class ParticipationController extends Controller
                                                     });
 
         // Return the view with the grouped and sorted participations
-        return view('previous_week', compact('previousWeeksParticipations'));
+        return view('previous_weeks', compact('previousWeeksParticipations'));
     }
 }
