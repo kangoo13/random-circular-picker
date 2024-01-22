@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [ParticipationController::class, 'index']);
 Route::get('/previous-week-participations', [
     ParticipationController::class,
-    'previousWeek'
+    'previousWeeks'
 ])->name('participations.previous_week');
 Route::get('/jwks.json', function () {
     return response()->json([
