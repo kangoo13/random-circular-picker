@@ -32,6 +32,7 @@ class CreateWeeklyParticipations extends Command
 
         // Group participants by the number of participations and sort them by count ascending
         $groupedParticipants = Participant::withCount('participations')
+                                          ->whereNull('deleted_at')
                                           ->get()
                                           ->groupBy('participations_count');
 
@@ -51,7 +52,7 @@ class CreateWeeklyParticipations extends Command
                 ) {
                     return $participant->team_id == $teamId;
                 });
-                $i++;
+                $i ++;
             } while ($eligibleParticipants->count() == 0);
 
             // Randomly pick a participant from the group
