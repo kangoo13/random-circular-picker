@@ -3,10 +3,12 @@
 @extends('layouts.app')
 @php
     // Use Carbon for date manipulation
+    $now = \Carbon\Carbon::now();
     $mondayThisWeek = \Carbon\Carbon::now()->startOfWeek();
     $mondayNextWeek = \Carbon\Carbon::now()->addWeek()->startOfWeek();
     $formattedDateThisWeek = $mondayThisWeek->format('Y-m-d'); // Example output: 2024-01-15
     $formattedDateNextWeek = $mondayNextWeek->format('Y-m-d'); // Example output: 2024-01-22
+    $batmanOfWeek = $now->weekOfYear % 2 === 0 ? "Aurélien" : "Lionel"; // Determine the batman of the week
 @endphp
 @php
     // Group participants by team name and sort them by team name
@@ -18,6 +20,11 @@
 @endphp
 @section('content')
     <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <h1 class="text-center mb-4">Le batman de la semaine est : {{ $batmanOfWeek }}</h1>
+            </div>
+        </div>
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card border-primary mb-3">
