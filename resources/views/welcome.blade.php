@@ -8,7 +8,7 @@
     $mondayNextWeek = \Carbon\Carbon::now()->addWeek()->startOfWeek();
     $formattedDateThisWeek = $mondayThisWeek->format('Y-m-d'); // Example output: 2024-01-15
     $formattedDateNextWeek = $mondayNextWeek->format('Y-m-d'); // Example output: 2024-01-22
-    $batmanOfWeek = $now->weekOfYear % 2 === 0 ? "Aurélien" : "Lionel"; // Determine the batman of the week
+    $batmanOfWeek = $now->weekOfYear % 2 === 0 ? "JV / Aurélien" : "JV / Lionel"; // Determine the batman of the week
 @endphp
 @php
     // Group participants by team name and sort them by team name
